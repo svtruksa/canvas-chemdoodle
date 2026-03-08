@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Canvas Chemistry Editor</title>
+  <link rel="stylesheet" href="css/ChemDoodleWeb.css">
+  <script src="js/ChemDoodleWeb.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #sketcher { border: 1px solid #ccc; margin-bottom: 10px; }
+    #preview { margin-top: 10px; }
+    button { padding: 5px 10px; font-size: 14px; }
+  </style>
+</head>
+<body>
+<h2>Draw your molecule:</h2>
+<div id="sketcher"></div>
+<button onclick="submitMolecule()">Submit Molecule</button>
+<div id="preview"></div>
+
+<script>
+  const sketcher = new ChemDoodle.SketcherCanvas('sketcher', 500, 300);
+
+  function updatePreview() {
+    const mol = sketcher.getMolecule();
+    if(mol.atoms.length > 0){
+      const img = new ChemDoodle.io.png.MolCanvas('preview', 300, 200);
+      img.loadMolecule(mol);
+    }
+  }
+
+  sketcher.repaint = () => {
+    ChemDoodle.SketcherCanvas.prototype.repaint.call(sketcher);
+    updatePreview();
+  }
+
+  function submitMolecule() {
+    const molfile = ChemDoodle.writeMOL(sketcher.getMolecule());
+    const smiles = ChemDoodle.writeSMILES(sketcher.getMolecule());
+
+    fetch('https://yourserver.edu/submit', {  // Replace with your backend
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({molfile, smiles})
+    })
+    .then(resp => resp.json())
+    .then(data => alert(`Score: ${data.score}\nFeedback: ${data.message}`))
+    .catch(err => alert('Submission failed: ' + err));
+  }
+</script>
+</body>
+</html>
