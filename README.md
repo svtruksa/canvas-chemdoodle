@@ -1,4 +1,4 @@
-# canvas-chemdoodle-
+# canvas-chemdoodle
 # Canvas + ChemDoodle Skeleton
 
 This repository contains a minimal setup for embedding ChemDoodle Web Components
