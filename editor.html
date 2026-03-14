@@ -15,11 +15,11 @@
 <body>
 <h2>Draw your molecule:</h2>
 <div id="sketcher"></div>
-<button onclick="submitMolecule()">Submit Molecule</button>
-<div id="preview"></div>
+<!--  <button onclick="submitMolecule()">Submit Molecule</button>
+<div id="preview"></div>  -->
 
 <script>
-  const sketcher = new ChemDoodle.SketcherCanvas('sketcher', 500, 300, {useServices:true, oneMolecule:true});
+  let sketcher = new ChemDoodle.SketcherCanvas('sketcher', 500, 300, {useServices:true, oneMolecule:true});
 
  // function updatePreview() {
  //   const mol = sketcher.getMolecule();
