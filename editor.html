@@ -2,8 +2,9 @@
 <html>
 <head>
   <title>Canvas Chemistry Editor</title>
-  <link rel="stylesheet" href="css/ChemDoodleWeb.css">
-  <script src="js/ChemDoodleWeb.js"></script>
+  <link rel="stylesheet" href="[path]/ChemDoodleWeb.css" type="text/css">
+  <script type="text/javascript" src="[path]/ChemDoodleWeb.js"></script>
+  <script type="text/javascript" src="[path]/ChemDoodleWeb-uis.js"></script>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     #sketcher { border: 1px solid #ccc; margin-bottom: 10px; }
@@ -18,34 +19,34 @@
 <div id="preview"></div>
 
 <script>
-  const sketcher = new ChemDoodle.SketcherCanvas('sketcher', 500, 300);
+  let sketcher = new ChemDoodle.SketcherCanvas('sketcher', 500, 300, {useServices:true, oneMolecule:true});
 
-  function updatePreview() {
-    const mol = sketcher.getMolecule();
-    if(mol.atoms.length > 0){
-      const img = new ChemDoodle.io.png.MolCanvas('preview', 300, 200);
-      img.loadMolecule(mol);
-    }
-  }
+ // function updatePreview() {
+ //   const mol = sketcher.getMolecule();
+  //  if(mol.atoms.length > 0){
+   //   const img = new ChemDoodle.io.png.MolCanvas('preview', 300, 200);
+    //  img.loadMolecule(mol);
+  //  }
+//  }
 
-  sketcher.repaint = () => {
-    ChemDoodle.SketcherCanvas.prototype.repaint.call(sketcher);
-    updatePreview();
-  }
+//  sketcher.repaint = () => {
+ //   ChemDoodle.SketcherCanvas.prototype.repaint.call(sketcher);
+  //  updatePreview();
+//  }
 
-  function submitMolecule() {
-    const molfile = ChemDoodle.writeMOL(sketcher.getMolecule());
-    const smiles = ChemDoodle.writeSMILES(sketcher.getMolecule());
+//  function submitMolecule() {
+ //   const molfile = ChemDoodle.writeMOL(sketcher.getMolecule());
+ //   const smiles = ChemDoodle.writeSMILES(sketcher.getMolecule());
 
-    fetch('https://yourserver.edu/submit', {  // Replace with your backend
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({molfile, smiles})
-    })
-    .then(resp => resp.json())
-    .then(data => alert(`Score: ${data.score}\nFeedback: ${data.message}`))
-    .catch(err => alert('Submission failed: ' + err));
-  }
+   // fetch('https://yourserver.edu/submit', {  // Replace with your backend
+    //  method: 'POST',
+    //  headers: {'Content-Type': 'application/json'},
+    //  body: JSON.stringify({molfile, smiles})
+  //  })
+   // .then(resp => resp.json())
+  //  .then(data => alert(`Score: ${data.score}\nFeedback: ${data.message}`))
+  //  .catch(err => alert('Submission failed: ' + err));
+//  }
 </script>
 </body>
 </html>
