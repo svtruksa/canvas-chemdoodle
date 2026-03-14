@@ -21,18 +21,18 @@
 <script>
   let sketcher = new ChemDoodle.SketcherCanvas('sketcher', 500, 300, {useServices:true, oneMolecule:true});
 
- // function updatePreview() {
- //   const mol = sketcher.getMolecule();
-  //  if(mol.atoms.length > 0){
-   //   const img = new ChemDoodle.io.png.MolCanvas('preview', 300, 200);
-    //  img.loadMolecule(mol);
-  //  }
-//  }
+ function updatePreview() {
+   const mol = sketcher.getMolecule();
+    if(mol.atoms.length > 0){
+      const img = new ChemDoodle.io.png.MolCanvas('preview', 300, 200);
+      img.loadMolecule(mol);
+    }
+  }
 
-//  sketcher.repaint = () => {
- //   ChemDoodle.SketcherCanvas.prototype.repaint.call(sketcher);
-  //  updatePreview();
-//  }
+  sketcher.repaint = () => {
+    ChemDoodle.SketcherCanvas.prototype.repaint.call(sketcher);
+    updatePreview();
+  }
 
 //  function submitMolecule() {
  //   const molfile = ChemDoodle.writeMOL(sketcher.getMolecule());
